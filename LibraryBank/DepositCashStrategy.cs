@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LibraryBank
+{
+    public class DepositCashStrategy : ITransactionStrategy
+    {
+        public void Execute(Account account, decimal amount)
+        {
+            if (account != null)
+            {
+                account.DepositCash(amount);
+            }
+        }
+    }
+}
