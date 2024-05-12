@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace LibraryBank
 {
-    internal class ITransactionStrategy
+    public interface ITransactionStrategy
     {
+        void Execute(Account account, decimal amount);
     }
 }
