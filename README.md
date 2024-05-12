@@ -30,12 +30,12 @@ This project follows the following programming principles:
 1. **Single Responsibility Principle**: Each class in the system has only one responsibility. For example, the class [`DatabaseHelper`](.LibraryBank/DatabaseHelper.cs) is only responsible for interacting with the database [Account](.LibraryBank/Account.cs) is responsible for managing the bank account.
 
 2. **Open/Closed Principle**: The system is designed in such a way that it can be easily extended without changing the existing code. For example, you can add new transaction types without changing the [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) class.
-3. **Barbara Liskov Substitution Principle**: The system is designed in such a way that subtypes can replace their base types without changing the correctness of the program. For example, [ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) and [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs) can replace [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs).
+3. **Barbara Liskov Substitution Principle**: The system is designed in such a way that subtypes can replace their base types without changing the correctness of the program. For example, [`DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) and [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs) can replace [`ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs).
 
 4. **Interface Segregation Principle**: Each class uses only the interfaces it needs. For example, the [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) class uses the [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs) interface.
 
 
-5. **Principle of dependence on abstractions, not on specific classes (Dependency Inversion Principle)**: High-level modules do not depend on low-level modules. Both types of modules depend on abstractions. For example, the class [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). depends on the [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)` abstraction, not the concrete `DepositCashStrategy` and `WithdrawCashStrategy` classes.
+5. **Principle of dependence on abstractions, not on specific classes (Dependency Inversion Principle)**: High-level modules do not depend on low-level modules. Both types of modules depend on abstractions. For example, the class [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). depends on the [`ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)` abstraction, not the concrete `DepositCashStrategy` and `WithdrawCashStrategy` classes.
 
 ## Refactoring techniques
 
