@@ -1,0 +1,30 @@
+﻿<Window x:Class="AppBank.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppBank"
+       mc:Ignorable="d"
+        Title="ATM" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="213*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition Width="587*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FF7FAA6D" Offset="0.417"/>
+                <GradientStop Color="#FFB9D5B2" Offset="0.777"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Label Content="Welcome to our ATM!" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Margin="62,52,0,0" FontFamily="Constantia" FontWeight="Bold" Grid.Column="2"/>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="2" Margin="87,0,0,0">
+            <Label Content="Enter card number:" FontFamily="Constantia" FontWeight="Bold"/>
+            <TextBox x:Name="CardNumber" Width="200" />
+            <Label Content="Enter password:" FontFamily="Constantia" FontWeight="Bold"/>
+            <PasswordBox x:Name="Password" Width="200"  />
+            <Button x:Name="Entry" Content="Login" Width="100" Margin="0,20,0,0" FontFamily="Constantia" FontWeight="Bold" Background="#FFBBC7AC" Click="Button_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
