@@ -1,67 +1,64 @@
-# Банкомат
+# ATM
 
-## Вступ
+## Introduction
 
-Цей проект представляє собою банківську систему, розроблену з використанням WPF (Windows Presentation Foundation) для графічного інтерфейсу користувача та ADO.NET для взаємодії з базою даних. Проект використовує ряд принципів програмування, технік рефакторингу та патернів проєктування для створення чистого, модульного та легко розширюваного коду.
+This project is a banking system developed using WPF (Windows Presentation Foundation) for graphical user interface and ADO.NET for database interaction. The project uses a number of programming principles, refactoring techniques and design patterns to create clean, modular and easily extensible code.
+## Functionality
 
-## Функціонал
+This project includes the development of a banking system that provides users with the ability to perform various banking operations:
 
-Цей проект включає в себе розробку банківської системи, яка надає користувачам можливість виконувати різні банківські операції:
+1. **User Authentication**: Users can enter their card number and PIN to login. This function is implemented in the class [`MainWindow`](./AppBank/MainWindow.xaml.cs).
 
-1. **Автентифікація користувача**: Користувачі можуть вводити номер своєї картки та PIN-код для входу в систему. Ця функція реалізована в класі [`MainWindow`](./AppBank/MainWindow.xaml.cs).
+2. **Balance Check**: Users can check their account balance. This function is implemented in the class [`Menu`](./AppBank/Menu.xaml.cs).
 
-2. **Перевірка балансу**: Користувачі можуть перевіряти баланс свого рахунку. Ця функція реалізована в класі [`Menu`](./AppBank/Menu.xaml.cs).
+3. **Cash Deposit**: Users can deposit cash into their account. This function is implemented in the class [`tocount`](./AppBank/tocount.xaml.cs).
 
-3. **Внесення готівки**: Користувачі можуть вносити готівку на свій рахунок. Ця функція реалізована в класі [`tocount`](./AppBank/tocount.xaml.cs).
+4. **Withdrawal**: Users can withdraw cash from their account. This function is implemented in the class[ `withdraw`](./AppBank/withdraw.xaml.cs).
 
-4. **Виведення готівки**: Користувачі можуть знімати готівку зі свого рахунку. Ця функція реалізована в класі[ `withdraw`](./AppBank/withdraw.xaml.cs).
+5. **Transfer funds**: Users can transfer funds from their account to another account. This function is implemented in the class [`Transfer`](./AppBank/Transfer.xaml.cs).
 
-5. **Переказ коштів**: Користувачі можуть переказувати кошти зі свого рахунку на інший рахунок. Ця функція реалізована в класі [`Transfer`](./AppBank/Transfer.xaml.cs).
+## Run process locally
 
-## Процес запуску локально
+1. Clone this repository.
+2. Open the project in Visual Studio.
+3. Run the project by pressing `Ctrl + F5`.
 
-1. Клонуйте цей репозиторій.
-2. Відкрийте проект у Visual Studio.
-3. Запустіть проект, натиснувши `Ctrl + F5`.
+## Principles of programming
 
-## Принципи програмування
+This project follows the following programming principles:
 
-Цей проект дотримується наступних принципів програмування:
+1. **Single Responsibility Principle**: Each class in the system has only one responsibility. For example, the class [`DatabaseHelper`](.LibraryBank/DatabaseHelper.cs) is only responsible for interacting with the database [Account](.LibraryBank/Account.cs) is responsible for managing the bank account.
 
-1. **Принцип єдиного обов'язку (Single Responsibility Principle)**: Кожен клас в системі має лише одну відповідальність. Наприклад, клас [`DatabaseHelper`](.LibraryBank/DatabaseHelper.cs) відповідає лише за взаємодію з базою даних [Account](.LibraryBank/Account.cs) відповідає за управління банківським рахунком.
+2. **Open/Closed Principle**: The system is designed in such a way that it can be easily extended without changing the existing code. For example, you can add new transaction types without changing the [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) class.
+3. **Barbara Liskov Substitution Principle**: The system is designed in such a way that subtypes can replace their base types without changing the correctness of the program. For example, [ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) and [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs) can replace [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs).
 
-2. **Принцип відкритості/закритості (Open/Closed Principle)**: Система розроблена таким чином, що її можна легко розширювати без зміни існуючого коду. Наприклад, можна додати нові типи транзакцій, не змінюючи клас [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs).
-
-3. **Принцип заміни Барбари Лісков (Liskov Substitution Principle)**: Система розроблена таким чином, що підтипи можуть замінювати їх базові типи без зміни коректності програми. Наприклад,[ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) та [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs) можуть замінювати[ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs).
-
-4. **Принцип розділення інтерфейсу (Interface Segregation Principle)**: Кожен клас використовує лише ті інтерфейси, які йому потрібні. Наприклад, клас [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) використовує інтерфейс [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs).
+4. **Interface Segregation Principle**: Each class uses only the interfaces it needs. For example, the [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) class uses the [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs) interface.
 
 
-5. **Принцип залежності від абстракцій, а не від конкретних класів (Dependency Inversion Principle)**: Високорівневі модулі не залежать від низькорівневих модулів. Обидва типи модулів залежать від абстракцій. Наприклад, клас [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). залежить від абстракції [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)`, а не від конкретних класів `DepositCashStrategy` та `WithdrawCashStrategy`.
+5. **Principle of dependence on abstractions, not on specific classes (Dependency Inversion Principle)**: High-level modules do not depend on low-level modules. Both types of modules depend on abstractions. For example, the class [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). depends on the [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)` abstraction, not the concrete `DepositCashStrategy` and `WithdrawCashStrategy` classes.
 
-## Техніки рефакторингу
+## Refactoring techniques
 
-Під час розробки цього проекту було використано наступні техніки рефакторингу:
+During the development of this project, the following refactoring techniques were used:
 
-1. **Видалення дублювання коду**: Було видалено дублювання коду шляхом використання методів та класів.
+1. **Remove Code Duplication**: Code duplication has been removed by using methods and classes.
 
-2. **Використання відповідних імен**: Всі класи, методи та змінні мають відповідні імена, які відображають їхню функцію.
+2. **Using Appropriate Names**: All classes, methods and variables have appropriate names that reflect their function.
 
-3. **Використання винятків для обробки помилок**: Використовуються винятки для обробки помилок під час виконання операцій з базою даних.
+3. **Using Exceptions for Error Handling**: Exceptions are used to handle errors during database operations.
 
-4. **Використання інкапсуляції**: Дані класу захищені від прямого доступу ззовні, використовуючи приватні поля та властивості.
+4. **Using Encapsulation**: Class data is protected from direct access from the outside by using private fields and properties.
 
-5. **Використання поліморфізму**: Використовується поліморфізм для виконання різних типів транзакцій.
+5. **Using Polymorphism**: Polymorphism is used to perform different types of transactions.
 
-## Патерни проєктування
+## Design patterns
 
-Цей проект використовує наступні патерни проєктування:
+This project uses the following design patterns:
 
-1. **Патерн Стратегія (Strategy Pattern)**: Використовується для виконання різних типів транзакцій. Він включає в себе інтерфейс  [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)` та його реалізації [ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) та [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs). Цей патерн дозволяє визначати сімейство алгоритмів, інкапсулювати кожен з них та робити їх взаємозамінними. Стратегія дозволяє алгоритм варіюватися незалежно від клієнтів, які його використовують.
+1. **Strategy Pattern**: Used to execute various types of transactions. It includes the interface [`ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs)` and its implementations [`DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) and [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs). This pattern allows you to define a family of algorithms, encapsulate each one, and make them interchangeable using these strategies via the _transactionStrategy field, which allows you to change the behavior of transactions in real-time. The strategy allows the algorithm to vary independently of the clients using it.
+2. **Observer Pattern**: Used to notify about various events such as successful authentication, balance check, etc. It includes a class [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs) that generates events. An observer defines a one-to-many relationship between objects, so that when one object changes state, all its dependents are notified and automatically updated.
+3. **Singleton Pattern**: Used to create a single instance of the class [`DatabaseHelper'](.LibraryBank/DatabaseHelper.cs) The GetInstance method checks whether an instance of the class exists, and if not, creates it. However, it ensures that the class has only one instance and provides a global access point to it.
+4. **Command Pattern**: This pattern is used to encapsulate a request as an object, allowing you to parameterize clients with different requests, queues, or requests and operations. It includes the interface [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs) and its implementations [ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) and [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs)
+5. **Partial Class Pattern**: This pattern is used to distribute one class to several files. This is useful for managing large classes. It includes the class [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs), which is spread over several files.
 
-2. **Патерн Спостерігач (Observer Pattern)**: Використовується для сповіщення про різні події, такі як успішна автентифікація, перевірка балансу тощо. Він включає в себе клас [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs), який генерує події. Спостерігач визначає залежність один-до-багатьох між об’єктами, так що коли один об’єкт змінює стан, всі його залежні отримують повідомлення та автоматично оновлюються.
-3. **Патерн Одинак (Singleton Pattern)**: Використовується для створення єдиного екземпляра класу [`DatabaseHelper`](.LibraryBank/DatabaseHelper.cs). Одинак гарантує, що клас має лише один екземпляр, і надає глобальну точку доступу до нього.
-4. **Патерн Команда (Command Pattern)**: Цей патерн використовується для інкапсуляції запиту як об’єкта, дозволяючи вам параметризувати клієнтів з різними запитами, чергою або запитами та операціями. Він включає в себе інтерфейс [ `ITransactionStrategy`](.LibraryBank/ITransactionStrategy.cs) та його реалізації[ `DepositCashStrategy`](.LibraryBank/DepositCashStrategy.cs) та [`WithdrawCashStrategy`](.LibraryBank/WithdrawCashStrategy.cs)
-5. **Патерн Частковий клас (Partial Class Pattern)**: Цей патерн використовується для розподілу одного класу на кілька файлів. Це корисно для керування великими класами. Він включає в себе клас  [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs), який розподілений на кілька файлів.
-
-6. **Патерн Фабрика (Factory Method Pattern)**: Цей патерн використовується в класі Bank для створення нового екземпляра [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). Він визначає інтерфейс для створення об’єкта, але дозволяє підкласам змінити тип створюваного об’єкта.
+6. **Factory Method Pattern**: This pattern is used in the Bank class to create a new instance of [`AutomatedTellerMachine`](.LibraryBank/AutomatedTellerMachine.cs). It defines an interface for creating an object, but allows subclasses to change the type of object being created.
