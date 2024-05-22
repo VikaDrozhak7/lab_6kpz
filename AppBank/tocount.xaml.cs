@@ -20,33 +20,24 @@ namespace AppBank
     /// </summary>
     public partial class tocount : Window
     {
-        private DatabaseHelper databaseHelper;
+        private IAccountRepository accountRepository;
         private string currentCardNumber;
-        private AutomatedTellerMachine atm;
-        private List<Account> accounts;
 
-        public tocount(DatabaseHelper dbHelper, string cardNumber)
+        public tocount(IAccountRepository accountRepository, string cardNumber)
         {
             InitializeComponent();
-
-            databaseHelper = dbHelper;
+            this.accountRepository = accountRepository;
             currentCardNumber = cardNumber;
         }
 
         private void Deposit_Click(object sender, RoutedEventArgs e)
         {
-            if (databaseHelper == null)
-            {
-                MessageBox.Show("DatabaseHelper is not initialized.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (decimal.TryParse(DepositAmount.Text, out decimal depositAmount) && depositAmount > 0)
             {
                 try
                 {
-                    databaseHelper.Deposit(currentCardNumber, depositAmount);
-                    MessageBox.Show($"Deposit successful! Current balance: {databaseHelper.GetAccountBalance(currentCardNumber):C}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    accountRepository.Deposit(currentCardNumber, depositAmount);
+                    MessageBox.Show($"Deposit successful! Current balance: {accountRepository.GetAccountBalance(currentCardNumber):C}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     DepositAmount.Clear();
                 }
                 catch (Exception ex)
@@ -62,10 +53,10 @@ namespace AppBank
 
         private void ReturnToMenu_Click(object sender, RoutedEventArgs e)
         {
-             Menu mainForm = new Menu(currentCardNumber, accounts, atm, databaseHelper);
-             mainForm.Show();
-             this.Hide();
+            Menu mainForm = new Menu(currentCardNumber, null, null, accountRepository);
+            mainForm.Show();
+            this.Hide();
         }
     }
-    }
+}
 
