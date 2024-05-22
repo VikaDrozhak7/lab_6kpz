@@ -20,34 +20,25 @@ namespace AppBank
     /// </summary>
     public partial class Transfer : Window
     {
-        private DatabaseHelper databaseHelper;
+        private IAccountRepository accountRepository;
         private string currentCardNumber;
-        private AutomatedTellerMachine atm;
-        private List<Account> accounts;
 
-        public Transfer(DatabaseHelper dbHelper, string cardNumber)
+        public Transfer(IAccountRepository accountRepository, string cardNumber)
         {
             InitializeComponent();
-
-            databaseHelper = dbHelper;
+            this.accountRepository = accountRepository;
             currentCardNumber = cardNumber;
         }
 
         private void Transfer_Click(object sender, RoutedEventArgs e)
         {
-            if (databaseHelper == null)
-            {
-                MessageBox.Show("DatabaseHelper is not initialized.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             string recipientCardNumber = CardNumber.Text;
             if (decimal.TryParse(TransferAmount.Text, out decimal transferAmount) && transferAmount > 0)
             {
                 try
                 {
-                    databaseHelper.Transfer(currentCardNumber, recipientCardNumber, transferAmount);
-                    MessageBox.Show($"Transfer successful! Sender balance: {databaseHelper.GetAccountBalance(currentCardNumber):C}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    accountRepository.Transfer(currentCardNumber, recipientCardNumber, transferAmount);
+                    MessageBox.Show($"Transfer successful! Sender balance: {accountRepository.GetAccountBalance(currentCardNumber):C}", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     CardNumber.Clear();
                     TransferAmount.Clear();
                 }
@@ -64,10 +55,10 @@ namespace AppBank
 
         private void ReturnToMenu_Click(object sender, RoutedEventArgs e)
         {
-            Menu mainForm = new Menu(currentCardNumber, accounts, atm, databaseHelper);
-             mainForm.Show();
+            Menu mainForm = new Menu(currentCardNumber, null, null, accountRepository);
+            mainForm.Show();
             this.Hide();
         }
     }
-    }
+}
 

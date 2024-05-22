@@ -21,7 +21,7 @@ namespace AppBank
     /// </summary>
     public partial class MainWindow : Window
     {
-        private DatabaseHelper databaseHelper;
+        private IAccountRepository accountRepository;
         private Bank bank;
         private AutomatedTellerMachine atm;
         private List<Account> accounts;
@@ -30,10 +30,12 @@ namespace AppBank
         {
             InitializeComponent();
 
+            DatabaseHelper databaseHelper = DatabaseHelper.GetInstance(@"Data Source=DESKTOP-GGP8G0N\SQLEXPRESS;Initial Catalog=bank;Integrated Security=True;Encrypt=false;");
+            accountRepository = new SqlAccountRepository(databaseHelper);
+
             bank = new Bank("MyBank");
             atm = bank.CreateATM();
             accounts = new List<Account>();
-            databaseHelper = DatabaseHelper.GetInstance(@"Data Source=DESKTOP-GGP8G0N\SQLEXPRESS;Initial Catalog=bank;Integrated Security=True;Encrypt=false;");
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -41,12 +43,12 @@ namespace AppBank
             string cardNumber = CardNumber.Text;
             string pin = Password.Password;
 
-            Account clientAccount = databaseHelper.GetAccount(cardNumber, pin);
+            Account clientAccount = accountRepository.GetAccount(cardNumber, pin);
 
             if (clientAccount != null)
             {
                 MessageBox.Show("Authentication successful!");
-                Menu mainForm = new Menu(cardNumber, accounts, atm, databaseHelper);
+                Menu mainForm = new Menu(cardNumber, accounts, atm, accountRepository);
                 mainForm.Show();
                 this.Hide();
             }
@@ -56,5 +58,4 @@ namespace AppBank
             }
         }
     }
-
 }

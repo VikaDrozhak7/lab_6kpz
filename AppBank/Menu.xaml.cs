@@ -24,27 +24,21 @@ namespace AppBank
         AutomatedTellerMachine atm;
         List<Account> accounts;
         string cardNumber;
-        DatabaseHelper databaseHelper;
+        private IAccountRepository accountRepository;
         private Account clientAccount;
-        public Menu(string cardNumber, List<Account> accounts, AutomatedTellerMachine atm, DatabaseHelper databaseHelper)
+
+        public Menu(string cardNumber, List<Account> accounts, AutomatedTellerMachine atm, IAccountRepository accountRepository)
         {
             this.cardNumber = cardNumber;
             this.accounts = accounts;
             this.atm = atm;
-            this.databaseHelper = databaseHelper;
-            this.clientAccount = clientAccount;
+            this.accountRepository = accountRepository;
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (databaseHelper == null)
-            {
-                MessageBox.Show("DatabaseHelper is not initialized.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            decimal balance = databaseHelper.GetAccountBalance(cardNumber);
+            decimal balance = accountRepository.GetAccountBalance(cardNumber);
 
             if (balance >= 0)
             {
@@ -63,22 +57,21 @@ namespace AppBank
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-
-            tocount depositcash = new tocount(databaseHelper, cardNumber);
+            tocount depositcash = new tocount(accountRepository, cardNumber);
             depositcash.Show();
-             this.Hide();
+            this.Hide();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            Transfer transferCash = new Transfer(databaseHelper, cardNumber);
+            Transfer transferCash = new Transfer(accountRepository, cardNumber);
             transferCash.Show();
             this.Close();
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            withdraw withdrawCash = new withdraw(databaseHelper, cardNumber);
+            withdraw withdrawCash = new withdraw(accountRepository, cardNumber);
             withdrawCash.Show();
             this.Close();
         }
@@ -88,4 +81,4 @@ namespace AppBank
             Application.Current.Shutdown();
         }
     }
-    }
+}

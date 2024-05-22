@@ -20,32 +20,24 @@ namespace AppBank
     /// </summary>
     public partial class withdraw : Window
     {
-        private DatabaseHelper databaseHelper;
+        private IAccountRepository accountRepository;
         private string currentCardNumber;
-        private AutomatedTellerMachine atm;
-        private List<Account> accounts;
-        public withdraw(DatabaseHelper dbHelper, string cardNumber)
+
+        public withdraw(IAccountRepository accountRepository, string cardNumber)
         {
             InitializeComponent();
-
-            databaseHelper = dbHelper;
+            this.accountRepository = accountRepository;
             currentCardNumber = cardNumber;
         }
 
         private void Withdraw_Click(object sender, RoutedEventArgs e)
         {
-            if (databaseHelper == null)
-            {
-                MessageBox.Show("DatabaseHelper is not initialized.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
             if (decimal.TryParse(WithdrawAmount.Text, out decimal withdrawAmount) && withdrawAmount > 0)
             {
                 try
                 {
-                    databaseHelper.Withdraw(currentCardNumber, withdrawAmount);
-                    MessageBox.Show($"Withdrawal successful! ", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    accountRepository.Withdraw(currentCardNumber, withdrawAmount);
+                    MessageBox.Show($"Withdrawal successful!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
                     WithdrawAmount.Clear();
                 }
                 catch (Exception ex)
@@ -61,10 +53,10 @@ namespace AppBank
 
         private void ReturnToMenu_Click(object sender, RoutedEventArgs e)
         {
-            Menu mainForm = new Menu(currentCardNumber, accounts, atm, databaseHelper);
+            Menu mainForm = new Menu(currentCardNumber, null, null, accountRepository);
             mainForm.Show();
             this.Close();
         }
     }
-    }
+}
 
