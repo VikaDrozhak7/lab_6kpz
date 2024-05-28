@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibraryBank.Managers;
+using LibraryBank.Stategy.Interfaces;
 
-namespace LibraryBank
+namespace LibraryBank.Models
 {
     public partial class AutomatedTellerMachine
     {
@@ -19,9 +21,9 @@ namespace LibraryBank
             _transactionStrategy = strategy;
         }
 
-        public void PerformTransaction(Account account, decimal amount)
+        public void PerformTransaction(AccountManager accountManager, Account account, decimal amount)
         {
-            _transactionStrategy?.Execute(account, amount);
+            _transactionStrategy?.Execute(accountManager, account, amount);
         }
     }
 }

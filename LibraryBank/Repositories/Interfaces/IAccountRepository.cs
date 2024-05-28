@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibraryBank.Models;
 
-namespace LibraryBank
+namespace LibraryBank.Repositories.Interfaces
 {
     public interface IAccountRepository
     {

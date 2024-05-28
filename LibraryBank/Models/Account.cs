@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBank
+namespace LibraryBank.Models
 {
     public partial class Account
     {
@@ -12,12 +12,7 @@ namespace LibraryBank
         public string OwnerName { get; set; }
         public decimal Balance { get; set; }
         private string PinCode { get; set; }
-
-        public string GetPinCode()
-        {
-            return PinCode;
-        }
-
+        
         public bool Authenticate(string enteredCardNumber, string enteredPin)
         {
             return this.CardNumber == enteredCardNumber && this.PinCode == enteredPin;

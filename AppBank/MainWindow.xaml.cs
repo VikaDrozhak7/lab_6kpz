@@ -14,6 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using LibraryBank;
+using LibraryBank.Models;
+using LibraryBank.Repositories;
+using LibraryBank.Repositories.Implementations;
+using LibraryBank.Repositories.Interfaces;
+
 namespace AppBank
 {
     /// <summary>
@@ -29,8 +34,10 @@ namespace AppBank
         public MainWindow()
         {
             InitializeComponent();
-
-            DatabaseHelper databaseHelper = DatabaseHelper.GetInstance(@"Data Source=DESKTOP-GGP8G0N\SQLEXPRESS;Initial Catalog=bank;Integrated Security=True;Encrypt=false;");
+            DatabaseHelper.SetConnectionString(@"Data Source=localhost;Initial Catalog=bank;Persist Security Info=False;User ID=sa;Password=SqlPassword22;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=True;Connection Timeout=30;");
+            //DatabaseHelper.SetConnectionString(@"Data Source=DESKTOP-GGP8G0N\SQLEXPRESS;Initial Catalog=bank;Integrated Security=True;Encrypt=false;");
+            DatabaseHelper databaseHelper = DatabaseHelper.GetInstance();
+            //DatabaseHelper databaseHelper = DatabaseHelper.GetInstance(@"Data Source=DESKTOP-GGP8G0N\SQLEXPRESS;Initial Catalog=bank;Integrated Security=True;Encrypt=false;");
             accountRepository = new SqlAccountRepository(databaseHelper);
 
             bank = new Bank("MyBank");
