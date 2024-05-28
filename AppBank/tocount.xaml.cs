@@ -54,7 +54,7 @@ namespace AppBank
 
         private void ReturnToMenu_Click(object sender, RoutedEventArgs e)
         {
-            Menu mainForm = new Menu(currentCardNumber, null, null, accountRepository);
+            Menu mainForm = new Menu(currentCardNumber,  null, accountRepository);
             mainForm.Show();
             this.Hide();
         }

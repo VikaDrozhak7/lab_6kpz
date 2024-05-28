@@ -12,7 +12,6 @@ namespace LibraryBank.Repositories.Implementations
     public class SqlAccountRepository : IAccountRepository
     {
         private readonly DatabaseHelper _databaseHelper;
-
         public SqlAccountRepository(DatabaseHelper databaseHelper)
         {
             _databaseHelper = databaseHelper;
@@ -36,7 +35,7 @@ namespace LibraryBank.Repositories.Implementations
 
                 account.OwnerName = reader.GetString(reader.GetOrdinal("OwnerName"));
                 account.CardNumber = reader.GetString(reader.GetOrdinal("CardNumber"));
-
+                account.Balance = reader.GetDecimal(reader.GetOrdinal("Balance"));
                 return account;
             }
 

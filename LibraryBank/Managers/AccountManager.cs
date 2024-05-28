@@ -4,11 +4,28 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using LibraryBank.Models;
+using LibraryBank.Repositories.Interfaces;
 
 namespace LibraryBank.Managers
 {
     public class AccountManager
     {
+        private readonly IAccountRepository _accountRepository;
+        private static AccountManager _instance;
+        public AccountManager(IAccountRepository accountRepository)
+        {
+            _accountRepository = accountRepository;
+        }
+
+        public static AccountManager GetInstance(IAccountRepository accountRepository)
+        {
+            if (_instance == null)
+            {
+                _instance = new AccountManager(accountRepository);
+            }
+            return _instance;
+        }
+        
         public void WithdrawCash(Account account, decimal amount)
         {
             if (account.Balance >= amount)
@@ -48,10 +65,21 @@ namespace LibraryBank.Managers
             }
         }
 
-        public void CheckBalance(Account account)
+        public decimal CheckBalance(Account account)
         {
-            Console.WriteLine($"Account balance: {account.Balance}");
+            var loadedBalance = _accountRepository.GetAccountBalance(account.CardNumber);
+            account.Balance = loadedBalance;
+            Console.WriteLine($"Account balance: {loadedBalance}");
             account.OnBalanceChecked();
+            return loadedBalance;
+        }
+
+        public Account GetAccount(string cardNumber, string pin)
+            => _accountRepository.GetAccount(cardNumber, pin);
+        
+        public bool IsAuthenticated(string enteredCardNumber, string enteredPin)
+        {
+            return _accountRepository.GetAccount(enteredCardNumber, enteredPin) != null;
         }
     }
 }

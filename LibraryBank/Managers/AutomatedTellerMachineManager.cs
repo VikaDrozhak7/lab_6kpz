@@ -10,31 +10,45 @@ namespace LibraryBank.Managers
 {
     public class AutomatedTellerMachineManager
     {
-        public AutomatedTellerMachine AutomatedTellerMachine { get; set; }
         private readonly IAccountRepository _accountRepository;
-        
+        private static AutomatedTellerMachineManager _instance;
         public AutomatedTellerMachineManager(IAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
-        public void Authenticate(Account account, string enteredCardNumber, string enteredPin)
+        public static AutomatedTellerMachineManager GetInstance(IAccountRepository accountRepository)
         {
-            if (account != null && account.Authenticate(enteredCardNumber, enteredPin))
+            if (_instance == null)
             {
-                AutomatedTellerMachine.OnAuthenticated();
+                _instance = new AutomatedTellerMachineManager(accountRepository);
             }
-            else
+            return _instance;
+        }
+        public bool Authenticate(AutomatedTellerMachine atm, string enteredCardNumber, string enteredPin)
+        {
+            if (enteredCardNumber == null || enteredPin == null)
             {
-                Console.WriteLine("Authentication failed. Please check your card number and PIN.");
-                AutomatedTellerMachine.OnAuthenticationFailed();
+                Console.WriteLine("Authentication failed. Please check your card number or PIN.");
+                atm.OnAuthenticationFailed();
+                return false;
             }
+            var accountManager = AccountManager.GetInstance(_accountRepository);
+            if (accountManager.IsAuthenticated(enteredCardNumber, enteredPin))
+            {
+                atm.OnAuthenticated();
+                return true;
+            }
+            Console.WriteLine("Authentication failed. Please check your card number or PIN.");
+            atm.OnAuthenticationFailed();
+            return false;
         }
 
-        public void CheckBalance(Account account)
+        public void CheckBalance(AutomatedTellerMachine atm, Account account)
         {
+            var accountManager = AccountManager.GetInstance(_accountRepository);
             decimal balance = _accountRepository.GetAccountBalance(account.CardNumber);
             account.Balance = balance;
-            AutomatedTellerMachine.OnBalanceChecked();
+            atm.OnBalanceChecked();
         }
     }
 }

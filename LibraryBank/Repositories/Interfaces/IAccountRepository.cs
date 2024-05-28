@@ -15,5 +15,4 @@ namespace LibraryBank.Repositories.Interfaces
         void Deposit(string cardNumber, decimal amount);
         void Transfer(string fromCardNumber, string toCardNumber, decimal amount);
     }
-
 }

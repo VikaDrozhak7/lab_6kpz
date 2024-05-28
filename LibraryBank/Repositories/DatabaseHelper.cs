@@ -19,7 +19,6 @@ namespace LibraryBank.Repositories
             {
                 _instance = new DatabaseHelper(connectionString);
             }
-
             return _instance;
         }
 
