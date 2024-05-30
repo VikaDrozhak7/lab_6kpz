@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LibraryBank.Repositories.Interfaces;
 
 namespace AppBank
 {
@@ -53,7 +54,7 @@ namespace AppBank
 
         private void ReturnToMenu_Click(object sender, RoutedEventArgs e)
         {
-            Menu mainForm = new Menu(currentCardNumber, null, null, accountRepository);
+            Menu mainForm = new Menu(currentCardNumber, null, accountRepository);
             mainForm.Show();
             this.Close();
         }

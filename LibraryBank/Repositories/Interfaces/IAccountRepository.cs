@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LibraryBank.Models;
 
-namespace LibraryBank
+namespace LibraryBank.Repositories.Interfaces
 {
     public interface IAccountRepository
     {
@@ -14,5 +15,4 @@ namespace LibraryBank
         void Deposit(string cardNumber, decimal amount);
         void Transfer(string fromCardNumber, string toCardNumber, decimal amount);
     }
-
 }

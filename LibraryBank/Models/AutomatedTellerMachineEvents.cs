@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBank
+namespace LibraryBank.Models
 {
     public partial class AutomatedTellerMachine
     {
@@ -15,32 +15,32 @@ namespace LibraryBank
         public event EventHandler CashDeposited;
         public event EventHandler FundsTransferred;
 
-        protected virtual void OnAuthenticationFailed()
+        public virtual void OnAuthenticationFailed()
         {
             AuthenticationFailed?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnAuthenticated()
+        public virtual void OnAuthenticated()
         {
             Authenticated?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnBalanceChecked()
+        public virtual void OnBalanceChecked()
         {
             BalanceChecked?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnCashWithdrawn()
+        public virtual void OnCashWithdrawn()
         {
             CashWithdrawn?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnCashDeposited()
+        public virtual void OnCashDeposited()
         {
             CashDeposited?.Invoke(this, EventArgs.Empty);
         }
 
-        protected virtual void OnFundsTransferred()
+        public virtual void OnFundsTransferred()
         {
             FundsTransferred?.Invoke(this, EventArgs.Empty);
         }

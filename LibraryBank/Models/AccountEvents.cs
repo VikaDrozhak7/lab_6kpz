@@ -4,26 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LibraryBank
+namespace LibraryBank.Models
 {
     public partial class Account
     {
-        private void OnCashWithdrawn()
+        public void OnCashWithdrawn()
         {
             CashWithdrawn?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnCashDeposited()
+        public void OnCashDeposited()
         {
             CashDeposited?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnFundsTransferred()
+        public void OnFundsTransferred()
         {
             FundsTransferred?.Invoke(this, EventArgs.Empty);
         }
 
-        private void OnBalanceChecked()
+        public void OnBalanceChecked()
         {
             BalanceChecked?.Invoke(this, EventArgs.Empty);
         }

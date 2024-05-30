@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LibraryBank.Models;
+using LibraryBank.Repositories.Interfaces;
 
 namespace AppBank
 {
@@ -22,15 +24,13 @@ namespace AppBank
     {
         Bank bank = new Bank("MyBank");
         AutomatedTellerMachine atm;
-        List<Account> accounts;
         string cardNumber;
         private IAccountRepository accountRepository;
         private Account clientAccount;
 
-        public Menu(string cardNumber, List<Account> accounts, AutomatedTellerMachine atm, IAccountRepository accountRepository)
+        public Menu(string cardNumber, AutomatedTellerMachine atm, IAccountRepository accountRepository)
         {
             this.cardNumber = cardNumber;
-            this.accounts = accounts;
             this.atm = atm;
             this.accountRepository = accountRepository;
             InitializeComponent();
